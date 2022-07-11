@@ -1,8 +1,8 @@
 package hello.core.order;
 
 import hello.core.discount.DiscountPolicy;
-import hello.core.discount.FixDiscountPolicy;
-import hello.core.member.*;
+import hello.core.member.Member;
+import hello.core.member.MemberRepository;
 
 public class OrderServiceImpl implements OrderService{
 
@@ -12,10 +12,19 @@ public class OrderServiceImpl implements OrderService{
     //결론 큰 프로젝트가 아니면 상관없다.
 
     //private final MemberService memberService = new MemberServiceImpl();
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    //private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
 
     //할인정책
-    private final DiscountPolicy discountPolicy = new FixDiscountPolicy();
+    // private final DiscountPolicy discountPolicy = new FixDiscountPolicy(); // DIP , OCP 위반
+    // private final DiscountPolicy rateDiscountPolicy = new RateDiscountPolicy(); // DIP , OCP 위반
+
+    private final DiscountPolicy discountPolicy;
+
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
