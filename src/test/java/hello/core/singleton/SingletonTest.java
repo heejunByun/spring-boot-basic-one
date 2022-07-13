@@ -4,6 +4,7 @@ import hello.core.AppConfig;
 import hello.core.member.MemberService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,6 +40,23 @@ public class SingletonTest {
         //isSameAs ::  == 처럼 참조값를 비교하는 것
         //isEqualTo ::  java equlas처럼 값을 비교하는 것
         assertThat(instance1).isSameAs(instance2);
+    }
+
+    @Test
+    @DisplayName("스프링 컨테이너와 싱글톤")
+    void springContainer()  {
+
+        //스프링 컨테이너에서 등록된 Bean들을 알아서 싱글톤 패턴으로 등록해준다 (싱글톤 단점들을 전부 보완한채로)
+        AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(AppConfig.class);
+
+        MemberService memberService1 = ac.getBean("memberService", MemberService.class);
+        MemberService memberService2 = ac.getBean("memberService", MemberService.class);
+
+        System.out.println("memberService1 = " + memberService1);
+        System.out.println("memberService2 = " + memberService2);
+
+        assertThat(memberService1).isSameAs(memberService2);
+
     }
 
 }
