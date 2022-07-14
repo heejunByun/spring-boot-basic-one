@@ -3,11 +3,11 @@ package hello.core.order;
 import hello.core.discount.DiscountPolicy;
 import hello.core.member.Member;
 import hello.core.member.MemberRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor // Lombok -> final이 붙은 변수들을 가지고 기본 생성자를 만들어준다.
+//@RequiredArgsConstructor // Lombok -> final이 붙은 변수들을 가지고 기본 생성자를 만들어준다.
 public class OrderServiceImpl implements OrderService{
 
     //회원정보
@@ -25,12 +25,16 @@ public class OrderServiceImpl implements OrderService{
 
     private final DiscountPolicy discountPolicy;
 
-//    Lombok (RequiredArgsConstructor) 가 아래 주석 코드를 만들어줌 Ctrl + F12 눌러서 확인 가능
-//    @Autowired
-//    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
-//        this.memberRepository = memberRepository;
-//        this.discountPolicy = discountPolicy;
-//    }
+    //Lombok (RequiredArgsConstructor) 가 아래 주석 코드를 만들어줌 Ctrl + F12 눌러서 확인 가능
+    //@Qualifier : public OrderServiceImpl(MemberRepository memberRepository, @Qualifier("mainDiscountPolicy") DiscountPolicy discountPolicy) {
+    //@MainDiscountPolicy : @Qualifier을 그냥 사용하게되면 실행은 되지만, 컴파일 시 문자가 들어가기 때문에 에러가 날 수 있다?? 그래서 직접 어노테이션을 만들어서 사용하느것이 바람직하다.
+    //-> public OrderServiceImpl(MemberRepository memberRepository, @MainDiscountPolicy DiscountPolicy discountPolicy) {
+
+    @Autowired
+    public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+        this.memberRepository = memberRepository;
+        this.discountPolicy = discountPolicy;
+    }
 
     @Override
     public Order createOrder(Long memberId, String itemName, int itemPrice) {
@@ -44,3 +48,5 @@ public class OrderServiceImpl implements OrderService{
         return memberRepository;
     }
 }
+
+
