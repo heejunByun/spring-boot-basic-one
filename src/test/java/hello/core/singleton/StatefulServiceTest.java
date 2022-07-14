@@ -1,6 +1,5 @@
 package hello.core.singleton;
 
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -11,7 +10,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StatefulServiceTest {
 
     @Test
-    @DisplayName("")
     void statefulServiceSingleton() {
 
         //Spring Container 에서 Singleton 자동 설정됨
