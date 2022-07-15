@@ -1,5 +1,8 @@
 package hello.core.lifecycle;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
 public class NetworkClient {
 
     private String url;
@@ -28,6 +31,7 @@ public class NetworkClient {
         System.out.println("close : " + url);
     }
 
+    @PostConstruct
     public void init() throws Exception {
         //Spring에서 Properties 셋팅이(의존관계) 끝나면 실행되는 함수
         System.out.println("NetworkClient.afterPropertiesSet");
@@ -35,6 +39,7 @@ public class NetworkClient {
         call("초기화 연결 메세지");
     }
 
+    @PreDestroy
     public void close() throws Exception {
         //모든 작업이 종료되기 전에 실행
         System.out.println("NetworkClient.destroy");
