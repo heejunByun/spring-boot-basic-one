@@ -21,6 +21,7 @@ public class AddNumber {
                     sum[i] = sum[i] - numbers[j];
                 }
             }
+            //tt
             answer = answer + sum[i];
         }
 
