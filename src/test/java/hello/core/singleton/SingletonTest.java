@@ -37,9 +37,19 @@ public class SingletonTest {
         System.out.println("instance1 = " + instance1);
         System.out.println("instance2 = " + instance2);
 
+        instance1.logic();
+        instance2.logic();
+
+        System.out.println("Global instance1.val()  " + instance1.globalVal());
+        System.out.println("Global instance2.val()  " + instance2.globalVal());
+
+        System.out.println("Local instance1.val()  " + instance1.localVal());
+        System.out.println("Local instance2.val()  " + instance2.localVal());
+
         //isSameAs ::  == 처럼 참조값를 비교하는 것
         //isEqualTo ::  java equlas처럼 값을 비교하는 것
         assertThat(instance1).isSameAs(instance2);
+        assertThat(instance1.globalVal()).isEqualTo(instance2.globalVal());
     }
 
     @Test
